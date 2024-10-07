@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sigtech-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/eoyewobi/sigtech_config.git
+    targetRevision: HEAD
+    path: deployment
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sigtech
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
