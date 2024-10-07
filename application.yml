@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/eoyewobi/sigtech_config.git
     targetRevision: HEAD
-    path: deployment
+    path: dev
   destination:
     server: https://kubernetes.default.svc
     namespace: sigtech
