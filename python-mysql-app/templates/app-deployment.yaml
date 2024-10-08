@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.pythonApp.name }}
+  labels:
+    app: {{ .Values.pythonApp.name }}
+spec:
+  replicas: {{ .Values.pythonApp.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.pythonApp.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.pythonApp.name }}
+    spec:
+      containers:
+      - name: {{ .Values.pythonApp.containerName }}
+        image: {{ .Values.pythonApp.image }}
+        ports:
+        - containerPort: {{ .Values.pythonApp.containerPort }}
+        env:
+        - name: DB_HOST
+          value: {{ .Values.mysqlService.name }}
+        - name: DB_USER
+          value: {{ .Values.mysql.rootUser }}
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.mysql.secretName }}
+              key: MYSQL_ROOT_PASSWORD
+        - name: DB_NAME
+          value: {{ .Values.mysql.dbName }}
