@@ -21,4 +21,4 @@ jobs:
       # Lint all YAML manifests
       - name: Lint manifests
         run: |
-          kubeval ./k8s/*.yaml
+          kubeval ./dev/*.yaml
