@@ -11,12 +11,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-       # Install kubescape for validation
-      - name: Install kubescape
+      # Install kube-score
+      - name: Install kube-score
         run: |
-          curl -s https://raw.githubusercontent.com/kubescape/kubescape/master/install.sh | bash
+          wget https://github.com/zegl/kube-score/releases/download/v1.13.0/kube-score_1.13.0_linux_amd64.tar.gz
+          tar xf kube-score_1.13.0_linux_amd64.tar.gz
+          sudo mv kube-score /usr/local/bin/
 
-      # Validate manifests
-      - name: Run Kubescape validation
+      # Lint all YAML manifests
+      - name: Lint manifests
         run: |
-          kubescape scan --submit --file-path ./k8s/*.yml
+          kube-score score ./k8s/*.yml
