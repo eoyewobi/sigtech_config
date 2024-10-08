@@ -18,7 +18,13 @@ jobs:
           tar xf kube-score_1.13.0_linux_amd64.tar.gz
           sudo mv kube-score /usr/local/bin/
 
-      # Lint all YAML manifests
-      - name: Lint manifests
+      # Run kube-score and output the results to a file
+      - name: Run kube-score linting
         run: |
-          kube-score score ./dev/*.yml
+          kube-score score ./dev/*.yml > kube-score-results.txt
+
+      # Add results to GitHub Actions summary
+      - name: Add kube-score results to summary
+        run: |
+          echo "## Kube-score Linting Results" >> $GITHUB_STEP_SUMMARY
+          cat kube-score-results.txt >> $GITHUB_STEP_SUMMARY
