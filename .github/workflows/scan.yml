@@ -1,0 +1,26 @@
+name: Security Scan for Kubernetes Manifests
+
+on: [pull_request]
+
+jobs:
+  security_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install kubesec
+      - name: Install kubesec
+        run: |
+          curl -fL https://github.com/controlplaneio/kubesec/releases/download/v2.11.0/kubesec_linux_amd64.tar.gz -o kubesec.tar.gz
+          tar -xzf kubesec.tar.gz
+          sudo mv kubesec /usr/local/bin/
+
+      # Scan all manifests for security issues
+      - name: Run Security Scan
+        run: |
+          for file in ./k8s/*.yaml; do
+            kubesec scan "$file"
+          done
