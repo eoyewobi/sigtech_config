@@ -1,6 +1,6 @@
 name: Security Scan for Kubernetes Manifests
 
-on: [pull_request]
+on: [push]
 
 jobs:
   security_scan:
@@ -21,6 +21,6 @@ jobs:
       # Scan all manifests for security issues
       - name: Run Security Scan
         run: |
-          for file in ./dev/*.yaml; do
+          for file in ./dev/*.yml; do
             kubesec scan "$file"
           done

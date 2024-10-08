@@ -1,6 +1,6 @@
 name: Lint Kubernetes Manifests
 
-on: [pull_request]
+on: [push]
 
 jobs:
   lint:
@@ -11,14 +11,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Install kubeval for linting
-      - name: Install kubeval
+      # Install kube-score
+      - name: Install kube-score
         run: |
-          wget https://github.com/instrumenta/kubeval/releases/download/0.16.1/kubeval-linux-amd64.tar.gz
-          tar xf kubeval-linux-amd64.tar.gz
-          sudo mv kubeval /usr/local/bin/
+          wget https://github.com/zegl/kube-score/releases/download/v1.13.0/kube-score_1.13.0_linux_amd64.tar.gz
+          tar xf kube-score_1.13.0_linux_amd64.tar.gz
+          sudo mv kube-score /usr/local/bin/
 
-      # Lint all YAML manifests
-      - name: Lint manifests
+      # Run kube-score linting and capture the output
+      - name: Run kube-score linting
         run: |
-          kubeval ./dev/*.yaml
+          kube-score score ./dev/*.yml > kube-score-results.txt
+          cat kube-score-results.txt
+
+      # Add kube-score results to the GitHub Actions summary
+      - name: Add kube-score results to summary
+        run: |
+          echo "## Kube-score Linting Results" >> $GITHUB_STEP_SUMMARY
+          cat kube-score-results.txt >> $GITHUB_STEP_SUMMARY
