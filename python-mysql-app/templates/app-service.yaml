@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: {{ .Values.pythonApp.serviceName }}
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: {{ .Values.pythonApp.name }}
   ports:
     - protocol: TCP
       port: {{ .Values.pythonApp.servicePort }}
       targetPort: {{ .Values.pythonApp.containerPort }}
-      nodePort: {{ .Values.pythonApp.nodePort }}
