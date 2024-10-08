@@ -1,6 +1,6 @@
 name: Security Scan for Kubernetes Manifests
 
-on: [pull_request]
+on: [push]
 
 jobs:
   security_scan:
