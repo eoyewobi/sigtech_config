@@ -21,6 +21,6 @@ jobs:
       # Scan all manifests for security issues
       - name: Run Security Scan
         run: |
-          for file in ./k8s/*.yaml; do
+          for file in ./dev/*.yaml; do
             kubesec scan "$file"
           done
