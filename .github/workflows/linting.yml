@@ -11,14 +11,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Install kubeval for linting
-      - name: Install kubeval
+       # Install kubescape for validation
+      - name: Install kubescape
         run: |
-          wget https://github.com/instrumenta/kubeval/releases/download/0.16.1/kubeval-linux-amd64.tar.gz
-          tar xf kubeval-linux-amd64.tar.gz
-          sudo mv kubeval /usr/local/bin/
+          curl -s https://raw.githubusercontent.com/kubescape/kubescape/master/install.sh | bash
 
-      # Lint all YAML manifests
-      - name: Lint manifests
+      # Validate manifests
+      - name: Run Kubescape validation
         run: |
-          kubeval ./dev/*.yml
+          kubescape scan --submit --file-path ./k8s/*.yml
