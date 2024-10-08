@@ -1,6 +1,6 @@
 name: Lint Kubernetes Manifests
 
-on: [pull_request]
+on: [push]
 
 jobs:
   lint:
