@@ -2,13 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.mysqlService.name }}
-  labels:
-    app: {{ .Values.mysqlService.name }}
 spec:
   ports:
   - port: {{ .Values.mysql.servicePort }}
-    targetPort: {{ .Values.mysql.serviceTargetPort }}
-    protocol: TCP
   selector:
     app: {{ .Values.mysqlService.name }}
   clusterIP: {{ .Values.mysql.clusterIP }}
