@@ -9,7 +9,6 @@ pythonApp:
 
 mysql:
   servicePort: 3306
-  serviceTargetPort: 3306
   clusterIP: None
   rootUser: root
   dbName: test_database
