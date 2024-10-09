@@ -10,5 +10,5 @@ spec:
     targetPort: {{ .Values.mysql.serviceTargetPort }}
     protocol: TCP
   selector:
-    app: {{ .Release.Name }}-mysql
+    app: {{ .Values.mysqlService.name }}
   clusterIP: {{ .Values.mysql.clusterIP }}
