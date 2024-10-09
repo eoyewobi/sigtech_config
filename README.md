@@ -12,7 +12,6 @@
 │   ├── mysql-service.yml
 │   └── mysql-statefulset.yml
 ├── helm-application.yml
-├── mycert.pem
 └── python-mysql-app
     ├── Chart.yaml
     ├── charts
