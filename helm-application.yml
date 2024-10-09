@@ -11,7 +11,7 @@ spec:
     path: python-mysql-app
     helm:
       valueFiles:
-        - python-mysql-app/values.yaml
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: sigtech
