@@ -1,4 +1,4 @@
-# sigtech_config
+# Sigtech Task Config
 
 This repo contains the Argo CD deployment for both helm package and the more conventional manifests.
 
