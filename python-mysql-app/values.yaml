@@ -18,7 +18,7 @@ mysqlService:
 
 ingress:
   enabled: true
-  host: localhost
+  host: local
   path: /
   pathType: Prefix
   serviceName: python-app
