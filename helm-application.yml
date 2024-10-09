@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sigtech-argo-application
+  name: helm-python-mysql-app
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/eoyewobi/sigtech_config.git
     targetRevision: HEAD
-    path: dev
+    path: python-mysql-app
+    helm:
+      valueFiles:
+        - python-mysql-app/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: sigtech
-
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
