@@ -2,11 +2,9 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ .Values.mysqlService.name }}
-  labels:
-    app: {{ .Values.mysqlService.name }}
 spec:
-  serviceName: {{ .Values.mysqlService.name }}   # Service managing this StatefulSet
-  replicas: 1                                    # Set replicas as needed
+  serviceName: {{ .Values.mysqlService.name }}
+  replicas: 1
   selector:
     matchLabels:
       app: {{ .Values.mysqlService.name }}
@@ -18,6 +16,8 @@ spec:
       containers:
       - name: mysql
         image: mysql:5.7
+        ports:
+          - containerPort: 3306
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -25,12 +25,14 @@ spec:
               name: {{ .Values.mysql.secretName }}
               key: MYSQL_ROOT_PASSWORD
         - name: MYSQL_DATABASE
-          value: {{ .Values.mysql.dbName }}
-        ports:
-        - containerPort: 3306
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.mysql.secretName }}
+              key: MYSQL_DATABASE
         volumeMounts:
         - name: mysql-data
-          mountPath: /var/lib/mysql          # MySQL data directory
+          mountPath: /var/lib/mysql
+
   volumeClaimTemplates:
   - metadata:
       name: mysql-data
@@ -38,4 +40,4 @@ spec:
       accessModes: ["ReadWriteOnce"]
       resources:
         requests:
-          storage: {{ .Values.mysql.storageSize }}  # e.g., 10Gi
+          storage: {{ .Values.mysql.storageSize }}

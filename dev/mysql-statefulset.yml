@@ -32,6 +32,7 @@ spec:
         volumeMounts:
         - name: mysql-data
           mountPath: /var/lib/mysql
+
   volumeClaimTemplates:
   - metadata:
       name: mysql-data
