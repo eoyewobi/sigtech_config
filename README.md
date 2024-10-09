@@ -121,6 +121,11 @@ Re-sync an Argo CD Application:
 argocd app sync <application-name>
 ```
 
+Port Forwarding:
+```commandline
+kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8081:80
+```
+
 
 Decrypt Sealed Secrets:
 
